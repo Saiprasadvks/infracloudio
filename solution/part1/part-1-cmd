@@ -1,0 +1,19 @@
+6.Same as (4), run the container and make sure,
+      The application is accessible on the host at http://localhost:9393
+      Set the environment variable CSVSERVER_BORDER to have value Orange.
+	  
+#sudo docker run -it -d --name infracloudio2 -v /csvserver/inputfile:/csvserver/inputdata -p 9393:9300 docker.io/infracloudio/csvserver /bin/bash	  
+#sudo docker exec -it infracloudio2 /bin/bash
+#nohup ./csvserver &
+#ps aux 
+
+  Checked in browser. Able see values.
+
+#vi ~/.bashrc
+   export CSVSERVER_BORDER=Orange
+#source ~/.bashrc   
+
+#kill pid(application)
+#started application gain (nohup ./csvserver &)
+
+   Checked in browser. Able see values with yellow border
