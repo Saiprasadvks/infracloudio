@@ -1,0 +1,26 @@
+version: '3'
+
+services:
+
+  infracloudio2:
+    image: docker.io/infracloudio/csvserver
+    container_name: infracloudio2
+    ports:
+    - 9393:9300
+    stdin_open: true
+    tty: true
+    volumes:
+    - /csvserver/inputfile:/csvserver/inputdata
+    environment:
+       CSVSERVER_BORDER: Orange
+       PLUGINS: prometheus
+  
+  prometheus:
+    image: prom/prometheus:v2.22.0
+    container_name: prometheus
+    stdin_open: true
+    tty: true
+    ports:
+    - 9090:9090
+    depends_on:
+    - infracloudio2
