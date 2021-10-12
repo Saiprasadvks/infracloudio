@@ -2,9 +2,9 @@ version: '3'
 
 services:
 
-  infracloudio2:
+  infracloudio:
     image: docker.io/infracloudio/csvserver
-    container_name: infracloudio2
+    container_name: infracloudio
     ports:
     - 9393:9300
     stdin_open: true
@@ -14,13 +14,25 @@ services:
     environment:
        CSVSERVER_BORDER: Orange
        PLUGINS: prometheus
-  
+    networks:
+      - csvnet
+
   prometheus:
     image: prom/prometheus:v2.22.0
-    container_name: prometheus
+    container_name: prometheus 
+    volumes:
+    - ./prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
     stdin_open: true
     tty: true
     ports:
     - 9090:9090
     depends_on:
-    - infracloudio2
+    - infracloudio
+    networks:
+      - csvnet
+
+networks:
+  csvnet:
+   driver: bridge
